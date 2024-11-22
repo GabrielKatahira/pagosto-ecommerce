@@ -1,0 +1,16 @@
+*{
+    box-sizing: border-box;
+}
+body{
+    padding: 0;
+    margin: 0;
+    font-family: "Judson";
+
+}
+:root{
+    --primary:#DAD1C3;
+    --secondary: #A69385;
+    --secondary-dark: #74665d;  
+    --white: #d9d9d9;
+    
+}

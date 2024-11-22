@@ -1,0 +1,15 @@
+#link {
+    text-decoration: none;
+    color: inherit;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-right: 20px;
+}
+#link>i{
+    margin: 0;
+}
+#link>h1 {
+    margin: 0;
+    font-size: 1.3em;
+}

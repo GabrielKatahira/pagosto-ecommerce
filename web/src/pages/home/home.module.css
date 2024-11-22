@@ -1,0 +1,91 @@
+.home {
+    background-color: var(--primary);
+}
+
+#hero{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 50px;
+    height: 70vh;
+    background-image: url('../../assets/images/hero.jpg');
+    background-size: cover;
+    background-color: rgba(0, 0, 0, 50%);
+    background-blend-mode: overlay;
+    background-position: center;
+}
+
+#herotext {
+    margin-top: 8vh;
+    width: 100%;
+    height: 30vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+#herotext h1 {
+    color: var(--primary);
+    margin: 0;
+    font-size: 4em;
+    font-weight: normal;
+    text-align: center;
+}
+#herotext h2 {
+    font-weight: normal;
+    color: var(--primary);
+    margin: 0;
+    width: 23vw;
+    text-align: center;
+    margin-bottom: 2vh;
+}
+#herotext a {
+    color: #000;
+    font-size: 1.5vw;
+    min-width: 100px;
+    width: 9vw;
+    height: 5vh;
+    min-height: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--primary);
+    border-radius: 10vh;
+    text-decoration: inherit;
+    transition: 0.5s;
+}
+#herotext a:hover {
+    transform: scale(1.2);
+}
+#desc {
+    margin-top: 10vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+#desc>h1 {
+    font-family: "Great Vibes";
+    font-size: 2.5em;
+    font-weight: normal;
+}
+#desc>div {
+    display: flex;
+    width: 100%;
+    justify-content: space-around;
+    align-items: center;
+}
+#desc>div>p{
+    font-size: 1.5em;
+    width: 50vw;
+    text-align: center;
+    margin-right: 10vw;
+}
+#desc > div > img {
+    width: 25vw;
+    height: 20vh;
+    object-fit: cover;
+    filter: hue-rotate(-15deg) saturate(80%) brightness(80%) contrast(80%);
+    border-radius: 20px;
+}

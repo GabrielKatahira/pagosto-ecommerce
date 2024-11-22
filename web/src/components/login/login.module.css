@@ -1,0 +1,47 @@
+#loginwindow {
+    position: absolute;
+    background-color: var(--secondary);
+    border-radius: 20px;
+    padding: 10px;
+    text-align: center;
+    transition: .5s;
+}
+.hide {
+    transform: translate(-30%,-20%);
+    opacity: 0;
+    visibility: hidden;
+}
+.show {
+    transform: translate(-30%,0);
+    opacity: 1;
+    visibility: visible;
+}
+#loginwindow div {
+    font-size: 1.2em;
+    font-weight: 400;
+    margin-bottom: 5px;
+}
+#loginwindow input {
+    font-family: inherit;
+    font-size: 1em;
+    width: 8vw;
+    margin-bottom: 5px;
+    border: none;
+    border-radius: 20px;
+    outline: none;
+    padding-left: 7px;
+    padding-right: 7px;
+}
+#loginwindow button {
+    margin-top: 15px;
+    background-color: var(--primary);
+    color: var(--secondary);
+    border: none;
+    outline: none;
+    border-radius: 20px;
+    font-size: 1.2em;
+    font-family: inherit;
+    padding: 5px 0px;
+    width: 8vw;
+    cursor: pointer;
+}

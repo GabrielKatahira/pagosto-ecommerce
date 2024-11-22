@@ -1,0 +1,42 @@
+#header {
+    width: 80vw;
+    background-color: var(--primary);
+    padding: 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-radius: 30px;
+}
+
+#header>img {
+    width: 100px;
+}
+
+#header>div {
+    display: flex;
+}
+#logincontainer {
+    position: relative;
+}
+#loginbutton {
+    text-decoration: none;
+    color: inherit;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 0;
+    margin-right: 20px;
+    background: none;
+    border: none;
+    outline: none;
+    font-family: inherit;
+    font-size: 1em;
+    cursor: pointer;
+}
+#loginbutton>i{
+    margin: 0;
+}
+#loginbutton>h1 {
+    margin: 0;
+    font-size: 1.3em;
+}

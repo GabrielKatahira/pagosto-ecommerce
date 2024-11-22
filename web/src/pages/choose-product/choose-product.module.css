@@ -1,0 +1,68 @@
+#chooseproduct{
+    background-color: var(--primary);
+}
+#productheader{
+    position: absolute;
+    margin-left: 10%;
+    margin-right: 10%;
+    margin-top: 5vh;
+}
+#split{
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    justify-content: space-between;
+}
+#split>a{
+    text-decoration: inherit;
+    color: #DAD1C3;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 60%);
+    background-blend-mode: darken;
+    transition: 0.5s;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-size: cover;
+    font-family: "Judson";
+}
+#paes{
+    background-image: url('../../assets/images/produto1.jpg');
+}
+#sanduiches{
+    background-image: url('../../assets/images/produto2.jpg');
+}
+#split>a>div {
+    transition: 0.5s;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+#split>a:hover div{
+    transform: scale(1.2);
+}
+#split>a>div>h1 {
+    margin: 0;
+    font-size: 2em;
+}
+#split>a>div>p {
+    text-align: center;
+    width: 50%;
+    font-size: 1.3em;
+}
+#split>a:hover {
+    background-color: rgba(0, 0, 0, 80%);
+}
+#split>a>div>div {
+    color: #000;
+    background-color: #DAD1C3;
+    width: 20%;
+    border-radius: 20px;
+    height: 3vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: 0.5s;
+}
