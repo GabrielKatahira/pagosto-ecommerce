@@ -6,6 +6,7 @@ import ChooseProduct from "./pages/choose-product";
 import Breads from "./pages/breads";
 import Sandwiches from "./pages/sandwiches";
 import Register from "./pages/register";
+import Cart from "./pages/cart";
 
 function AppRoutes(){
     return(
@@ -16,6 +17,7 @@ function AppRoutes(){
                 <Route path="/produtos/paes" element={<Breads/>}/>
                 <Route path="/produtos/sanduiches" element={<Sandwiches/>}/>
                 <Route path="/cadastro" element={<Register/>}/>
+                <Route path="/carrinho" element={<Cart/>}/>
             </Routes>
         </BrowserRouter>
     )

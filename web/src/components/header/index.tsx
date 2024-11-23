@@ -21,7 +21,7 @@ function Header() {
                     </button>
                     <Login isVisible={loginVis} toggleVis={() =>{setLoginVis(!loginVis)}}/>
                 </div>
-                {useAuth().id ? (<HeaderLink title="Carrinho" link="/" icon="fa-solid fa-shopping-cart fa-2x" />) : 
+                {useAuth().id ? (<HeaderLink title="Carrinho" link="/carrinho" icon="fa-solid fa-shopping-cart fa-2x" />) : 
                 ( <HeaderLink title="Cadastro" link="/cadastro" icon="fa-solid fa-user fa-2x" />)
                 }
                

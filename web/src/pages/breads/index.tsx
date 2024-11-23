@@ -21,6 +21,15 @@ interface unmappedBread{
     sizes: string;
     prices: string;
 }
+interface User {
+    id: number;
+    cart: Bought[];
+}
+interface Bought {
+    id: number;
+    size: number;
+    price: number;
+}
 
 function Breads() {
     const [breads, setBreads] = useState<Bread[]>([]);
@@ -35,7 +44,8 @@ function Breads() {
         prices: [],
     })
     const [images, setImages] = useState([]);
-
+    const [currUser, setCurrUser] = useState<User>({id: 0, cart: []})
+    const userId = useAuth()?.id || 0
     const [newSizes, setNewSizes] = useState<number[]>([]);
     const [newPrices, setNewPrices] = useState<number[]>([]);
 
@@ -46,6 +56,31 @@ function Breads() {
     useEffect(() => {
         fetchImageNames()
     }, [images])
+
+    useEffect(() => {
+        if (userId > 0) {
+            fetchUser();
+        } else {
+            alert('Sessão expirada ou inválida! Por favor faça login.')
+        }
+    }, [userId]);
+
+    async function fetchUser() {
+        try {
+            if (userId > 0) {
+                await api.get('/users',{params: {id: userId}}).then(res => {
+                    
+                    setCurrUser({
+                        id:res.data.id,
+                        cart:JSON.parse(res.data.cart).cart
+                    });
+                })
+            }
+        } catch(err) {
+            alert('Erro no login!');
+            console.log(err)
+        }
+    }
     
     async function fetchImageNames() {
         try{
@@ -82,6 +117,30 @@ function Breads() {
         } catch (err) {
             alert('Falha em buscar pães!')
             console.log(err)
+        }
+    }
+
+    async function addToCart(productid:number,productsize:number,productprice:number) {
+        if (!currUser) return; 
+
+        try {
+            
+            const newCartItem = { id:productid, size:productsize, price:productsize };
+
+            setCurrUser((prevUser) => ({
+                ...prevUser,
+                cart: [...prevUser.cart, newCartItem],
+            }));
+
+            const updatedCart = [...currUser.cart, newCartItem];
+            await api.put(`/cart?id=${currUser.id}`, {
+                cart: JSON.stringify({ cart: updatedCart }),
+            });
+            console.log('Carrinho atualizado!', updatedCart);
+
+        } catch (err) {
+            console.error(err);
+            alert('Erro ao adicionar ao carrinho!');
         }
     }
 
@@ -125,7 +184,7 @@ function Breads() {
             <div id={styles.products}>
             {
                 breads.map((bread: Bread) => (
-                    <Product id={bread.id} name={bread.name} prices={bread.prices} image={bread.image} description={bread.description} sizes={bread.sizes} category='Breads' isAdmin={isAdmin}/>
+                    <Product id={bread.id} name={bread.name} prices={bread.prices} image={bread.image} description={bread.description} sizes={bread.sizes} category='Breads' isAdmin={isAdmin} addToCart={addToCart}/>
                 ))
             }
             </div>

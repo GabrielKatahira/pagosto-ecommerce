@@ -58,7 +58,7 @@ app.get('/api/users', async (req, res) => {
     const users = await db('users').where('id',id).first();
     res.json(users);
   } catch (error) {
-    console.error(error);
+    console.error(error); 
     res.status(500).json('Erro ao buscar usuários: ' + error);
   }
 })
@@ -97,7 +97,16 @@ app.put('/api/cart', async(req,res) => {
 
 
 
-
+app.get('/api/products', async(req,res) => {
+  try {
+    const {id} = req.query
+    const product = await db('products').where('id',id).first();
+    res.json(product);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json('Erro ao buscar produto: '+error);
+  }
+})
 app.post('/api/products', async (req, res) => {
   try {
     const {name, description, prices, sizes, category, image} = req.body;

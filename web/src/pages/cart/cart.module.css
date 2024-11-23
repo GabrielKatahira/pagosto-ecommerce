@@ -1,0 +1,117 @@
+#cart{
+    background-color: var(--primary);
+    min-height: 100vh;
+}
+#banner {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+    padding-top: 50px;
+    height: 32vh;
+    background-image: url('../../assets/images/hero.jpg');
+    background-size: cover;
+    background-color: rgba(0, 0, 0, 50%);
+    background-blend-mode: overlay;
+    background-position: center;
+    padding-bottom: 4vh;
+}
+#banner>h1{
+    margin:0;
+    font-size: 3.5em;
+    font-family: "Judson";
+    color:  var(--primary);
+    font-weight: 400;
+}
+#products {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 50px;
+}
+#products>div {
+    width: 80vw;
+    display: flex;
+    justify-content: space-between;
+    background-color: var(--secondary);
+    padding: 20px;
+    border-radius: 20px;
+    margin-bottom: 30px;
+    color: var(--primary);
+    align-items: center;
+}
+#products img {
+    width: 200px;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 20px;
+}
+#products h1 {
+    font-size: 1.7em;
+    font-weight: 400;
+    margin: 0;
+    width: 200px;
+    text-align: center;
+}
+#products h2 {
+    margin: 0;
+    font-size: 2em;
+    font-weight: 600;
+}
+#products h3 {
+    margin: 0;
+    font-weight: 400;
+}
+#products button {
+    background-color: var(--primary);
+    color: var(--secondary);
+    border-radius: 10px;
+    border: none;
+    outline: none;
+    font-family: inherit;
+    font-size: 1.5em;
+    padding: 10px 20px;
+    transition: 0.5s;
+}
+#products button:hover {
+    transform: scale(1.2);
+    cursor: pointer;
+}
+#total {
+    margin-left: 10vw;
+    margin-right: 10vw;
+    width: 80vw;
+    display: flex;
+    justify-content: right;
+    background-color: var(--secondary-dark);
+    padding: 20px;
+    border-radius: 20px;
+    margin-top: 50px;
+    color: var(--primary);
+    align-items: center;
+}
+#total button{
+    background-color: var(--primary);
+    color: var(--secondary-dark);
+    border-radius: 10px;
+    border: none;
+    outline: none;
+    font-family: inherit;
+    font-size: 1.5em;
+    padding: 10px 20px;
+    transition: 0.5s;
+    margin-left: 50px;
+}
+#total button:hover {
+    transform: scale(1.2);
+    cursor: pointer;
+}
+
+#total h2 {
+    font-size: 2em;
+    font-weight: 600;
+    margin-right: 2vw;
+    margin-left: 2vw;
+}
