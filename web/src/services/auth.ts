@@ -6,8 +6,10 @@ interface CustomJwtPayload extends JwtPayload {
     name:string;
 }
 
+
 export const setToken = (token: string):void => {
     localStorage.setItem("token", token);
+
 }
 
 export const getToken = (): string | null => {
@@ -35,3 +37,4 @@ export const validateToken = ():boolean => {
     const currDate = Math.floor(Date.now()/ 1000)
     return token.exp > currDate;
 }
+

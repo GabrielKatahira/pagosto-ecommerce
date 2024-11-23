@@ -1,5 +1,5 @@
 import { useState,useEffect } from "react";
-import { validateToken, decodeToken, removeToken } from "../../services/auth";
+import { validateToken, decodeToken, removeToken} from "../../services/auth";
 
 interface userToken{
     id: number | null;
@@ -21,7 +21,10 @@ export const useAuth = () =>{
         }
 
         checkAuth();
-    }, [user]);
+        const interval = setInterval(checkAuth, 1000);
+        return () => clearInterval(interval);
+
+    }, []);
 
    return user;
 }

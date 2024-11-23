@@ -3,6 +3,7 @@ import HeaderLink from '../headerlink';
 import logo from '../../assets/images/logo.png'
 import Login from '../login';
 import { useState } from 'react';
+import { useAuth } from '../../hooks/useAuth';
 
 function Header() {
     const [loginVis, setLoginVis] = useState(false);
@@ -16,12 +17,15 @@ function Header() {
                 <div id={styles.logincontainer}>
                     <button id={styles.loginbutton} onClick={()=>{setLoginVis(!loginVis)}}>
                         <i className='fa-solid fa-right-to-bracket fa-2x'></i>
-                        <h1>Login</h1>
+                        <h1>{useAuth().id ? 'Sair' : 'Login'}</h1>
                     </button>
                     <Login isVisible={loginVis} toggleVis={() =>{setLoginVis(!loginVis)}}/>
                 </div>
-                <HeaderLink title="Cadastro" link="/cadastro" icon="fa-solid fa-user fa-2x" />
-                <HeaderLink title="Carrinho" link="/" icon="fa-solid fa-shopping-cart fa-2x" />
+                {useAuth().id ? (<HeaderLink title="Carrinho" link="/" icon="fa-solid fa-shopping-cart fa-2x" />) : 
+                ( <HeaderLink title="Cadastro" link="/cadastro" icon="fa-solid fa-user fa-2x" />)
+                }
+               
+                
             </div>
         </div>
     )

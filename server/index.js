@@ -37,13 +37,29 @@ app.get('/api/productimages', async (req, res) => {
 app.post('/api/users', async (req, res) => {
   try {
     const {name, password, userType} = req.body;
+    const hasUser = await db('users').where('name',name).first();
+    if(hasUser) {
+      return res.status(409).json('Usuário já existe!');
+    }
     const salt = bcrypt.genSaltSync(10);
     const hashedPassword = bcrypt.hashSync(password, salt);
     await db('users').insert({name, userType, password:hashedPassword, cart:'[]'});
-    res.status(201).json('Sucesso!');
+    const user = await db('users').where('name',name).first();
+    const token = jwt.sign({id: user.id, type:user.userType, name:user.name},'key_super_secreta_confia',{expiresIn:'1h'})
+    res.status(200).json({token});
   } catch (error) {
     console.error(error);
     res.status(500).json('Erro ao cadastrar usuário!');
+  }
+})
+app.get('/api/users', async (req, res) => {
+  try {
+    const {id} = req.query
+    const users = await db('users').where('id',id).first();
+    res.json(users);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json('Erro ao buscar usuários: ' + error);
   }
 })
 
@@ -63,6 +79,18 @@ app.get('/api/login', async (req, res) => {
   } catch (error) {
     console.error(error);
     res.status(500).json('Erro ao fazer login!');
+  }
+})
+app.put('/api/cart', async(req,res) => {
+  try {
+    const {id} = req.query;
+    const {cart} = req.body;
+    await db('users').where('id',id).update({cart});
+    res.status(200).json('Carrinho atualizado com sucesso!');
+
+  } catch (error) {
+    console.error(error);
+    res.status(500).json('Erro ao adicionar ao carrinho:'+error);
   }
 })
 

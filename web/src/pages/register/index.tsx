@@ -1,7 +1,9 @@
 import styles from './register.module.css'
 import Header from '../../components/header'
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import api from '../../services/api';
+import { setToken } from '../../services/auth';
 
 interface User {
     name:string;
@@ -10,6 +12,7 @@ interface User {
 }
 
 function Register() {
+    const navigation = useNavigate();
     const [newUser, setNewUser] = useState<User>({
         name: '',
         password: '',
@@ -22,11 +25,14 @@ function Register() {
         if (firstPass === confirmPass) {
             newUser.password = firstPass;
             try{
-                await api.post('/users', {name: newUser.name, password: newUser.password, userType: newUser.userType}).then(()=>{
+                await api.post('/users', {name: newUser.name, password: newUser.password, userType: newUser.userType}).then((res)=>{
                     alert('Usuário registrado com sucesso!')
                     setNewUser({name: '', password: '', userType: 'admin'})
+                    setToken(res.data.token)
+                    navigation('/')
                     setFirstPass('')
-                    setConfirmPass('')}
+                    setConfirmPass('')
+                    }
                 )
             }catch(err){
                 alert('Falha ao registrar o usuário!')

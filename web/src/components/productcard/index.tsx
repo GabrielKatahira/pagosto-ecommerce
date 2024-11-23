@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import styles from './productcard.module.css';
 import api from '../../services/api';
+import { useAuth } from '../../hooks/useAuth';
 
 interface ProductProps{
     id: number;
@@ -13,14 +14,14 @@ interface ProductProps{
     isAdmin: boolean;
 }
 
-interface BoughtProps {
+interface User {
     id: number;
-    name: string;
-    image: string;
-    description: string;
+    cart: Bought[];
+}
+interface Bought {
+    id: number;
     size: number;
     price: number;
-    category: string;
 }
 
 
@@ -33,22 +34,17 @@ const Product: React.FC<ProductProps> = ({id,name,image,description,sizes,prices
     const [newImage, setNewImage] = useState(image);
     const [newSizes, setNewSizes] = useState<number[]>(sizes);
     const [newPrices, setNewPrices] = useState<number[]>(prices);
-
-
+    const [currUser, setCurrUser] = useState<User>({id: 0, cart: []})
+    const userId = useAuth()?.id || 0
     const [images, setImages] = useState([]);
 
-    function handleSize(e:React.ChangeEvent<HTMLSelectElement>) {
-        if (e.target){
-            setSize(Number(e.target.value));
-            setPrice(prices[sizes.indexOf(Number(e.target.value))]);
-        }
-
-    }
+    
     useEffect(() => {
         if (isAdmin) {
             fetchImageNames()
         }
     }, [images])
+
     async function fetchImageNames() {
         try{
             api.get('/productimages').then((response) => {
@@ -59,6 +55,36 @@ const Product: React.FC<ProductProps> = ({id,name,image,description,sizes,prices
             console.log(err)
         }
     }
+
+    useEffect(() => {
+        fetchUser()
+    },[currUser])
+
+    async function fetchUser() {
+        try {
+            if (userId > 0) {
+                await api.get('/users',{params: {id: userId}}).then(res => {
+                    
+                    setCurrUser({
+                        id:res.data.id,
+                        cart:JSON.parse(res.data.cart).cart
+                    });
+                })
+            }
+        } catch(err) {
+            alert('Erro no login!');
+            console.log(err)
+        }
+    }
+
+    function handleSize(e:React.ChangeEvent<HTMLSelectElement>) {
+        if (e.target){
+            setSize(Number(e.target.value));
+            setPrice(prices[sizes.indexOf(Number(e.target.value))]);
+        }
+
+    }
+
     async function handleDelete(){
         try{
             await api.delete('/products',{params:{id}}).then(
@@ -100,6 +126,18 @@ const Product: React.FC<ProductProps> = ({id,name,image,description,sizes,prices
         catch(err){
             alert('Falha em editar o produto!');
             console.log(err);
+        }
+    }
+    async function addToCart() {
+        try {
+            const userCart : Bought[] = currUser.cart
+            const addedProduct = {id,size,price};
+            userCart.push(addedProduct);
+            await api.put(`/cart?id=${userId}`,{cart:JSON.stringify({cart:userCart})}).then(() =>{
+                console.log('Carrinho atualizado!')
+            })
+        } catch(err) {
+            console.error(err)
         }
     }
     return(
@@ -182,7 +220,7 @@ const Product: React.FC<ProductProps> = ({id,name,image,description,sizes,prices
               </div>
             )}
             {isEditing ? (<button id={styles.btnbuy} onClick={handleSave}>Finalizar Edição</button>) 
-            : (<button id={styles.btnbuy}>Adicionar ao Carrinho</button>)
+            : (<button id={styles.btnbuy} onClick={addToCart}>Adicionar ao Carrinho</button>)
             }
             
             {isAdmin && <button id={styles.btnadm} onClick={handleToggleEdit}><i className={`fa-solid ${isEditing ? 'fa-x' : 'fa-pencil'} fa-2x`}></i></button>}
