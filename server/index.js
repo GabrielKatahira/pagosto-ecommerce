@@ -43,7 +43,7 @@ app.post('/api/users', async (req, res) => {
     }
     const salt = bcrypt.genSaltSync(10);
     const hashedPassword = bcrypt.hashSync(password, salt);
-    await db('users').insert({name, userType, password:hashedPassword, cart:'[]'});
+    await db('users').insert({name, userType, password:hashedPassword, cart:'{"cart":[]}'});
     const user = await db('users').where('name',name).first();
     const token = jwt.sign({id: user.id, type:user.userType, name:user.name},'key_super_secreta_confia',{expiresIn:'1h'})
     res.status(200).json({token});
@@ -138,10 +138,6 @@ app.put('/api/products',async (req, res) => {
   }
 })
 
-
-
-
-
 app.get('/api/breads', async (req, res) => {
   try {
     const products = await db('products').where('category','=','Breads').select('*')
@@ -151,7 +147,52 @@ app.get('/api/breads', async (req, res) => {
     res.status(500).json('Erro em buscar pães!');
   }
 });
+app.get('/api/sandwiches', async (req, res) => {
+  try {
+    const products = await db('products').where('category','=','Sandwiches').select('*')
+    res.json(products);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json('Erro em buscar pães!');
+  }
+});
 
+app.post('/api/orders', async (req, res) => {
+  try {
+    const {userId, cart, price} = req.body
+    await db('orders').insert({user_id:userId, cart: cart, price: price, status:'Pendente'})
+    res.status(201).json('Pedido realizado com sucesso!')
+  } catch (err) {
+    console.error(err)
+    res.status(500).json('Erro ao realizar pedido!')
+  }
+})
+app.get('/api/orders', async (req, res) => {
+  try {
+    const {userId} = req.query
+    if(!userId) {
+      const orders = await db('orders').select('*')
+      res.json(orders);
+    } 
+    else {
+      const orders = await db('orders').where('user_id',userId).select('*')
+      res.json(orders);
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).json('Erro em buscar pedidos!');
+  }
+})
+app.put('/api/orders', async (req, res) => {
+  try {
+    const {orderId, status} = req.body
+    await db('orders').where('id', orderId).update({status})
+    res.status(200).json('Status do pedido atualizado com sucesso!')
+  } catch (error) {
+    console.error(error);
+    res.status(500).json('Erro ao atualizar status do pedido!');
+  }
+}) 
 
 
 

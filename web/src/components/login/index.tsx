@@ -3,6 +3,7 @@ import styles from './login.module.css'
 import api from '../../services/api';
 import {setToken, decodeToken, removeToken} from '../../services/auth';
 import { useAuth } from '../../hooks/useAuth';
+import { useNavigate } from 'react-router-dom';
 
 
 interface User {
@@ -15,6 +16,7 @@ interface LoginWindow {
 }
 
 const Login:React.FC<LoginWindow> = ({isVisible, toggleVis}) => {
+    const navigate = useNavigate();
     const [user, setUser] = useState<User>({
         name: '',
         password: ''
@@ -39,6 +41,8 @@ const Login:React.FC<LoginWindow> = ({isVisible, toggleVis}) => {
             {isLoggedIn ? 
             (<div>
                 <div>Bem vindo(a), <b>{decodeToken()?.name}</b></div>
+                {decodeToken()?.type == 'admin' && (<button onClick={() => {navigate('/pedidosadmin')}}>Administrar Pedidos</button>)}
+                <button onClick={() => {navigate('/meuspedidos')}}>Meus Pedidos</button>
                 <button onClick={() => {removeToken();toggleVis()}}>Sair</button>
             </div>) : 
             (<>

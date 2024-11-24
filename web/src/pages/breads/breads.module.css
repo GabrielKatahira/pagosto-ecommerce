@@ -24,6 +24,36 @@
     color:  var(--primary);
     font-weight: 400;
 }
+#filter {
+    width: 90vw;
+    margin: 30px 5vw 0 5vw;
+    background-color: var(--secondary);
+    color: var(--white);
+    padding: 20px;
+    border-radius: 20px;
+    display: flex;
+    justify-content: left;
+}
+#filter select {
+    width:100px;
+    background-color: var(--secondary-dark);
+    color: var(--primary);
+    border: none;
+    outline: none;
+    padding: 2px;
+    border-radius: 5px;
+    margin-left: 20px;
+}
+#filter input {
+    background-color: var(--secondary-dark);
+    color: var(--white);
+    border: none;
+    font-family: inherit;
+    font-size: 1em;
+    outline: none;
+    margin-left: 20px;
+    width: 70%;
+}
 #products {
     width: 100%;
     display: flex;

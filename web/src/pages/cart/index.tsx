@@ -99,6 +99,30 @@ function Cart() {
             return null;
         }
     }
+    async function orderProducts() {
+        try {
+            if (!userId) return;
+            await api.post('/orders', { userId: userId, cart:JSON.stringify({cart:cart}), price:cart.reduce((total, cartItem) => total + cartItem.price, 0).toFixed(2)  }).then(() =>{
+                alert('Pedido realizado com sucesso!')
+                clearCart();
+            })
+
+        } catch (err) {
+            console.error('Falha ao realizar pedido:', err);
+            alert('Falha ao realizar pedido!');
+        }
+    }
+    async function clearCart() {
+        try {
+            if (!userId) return;
+            await api.put(`/cart?id=${userId}`,{cart: JSON.stringify({cart:[]})}).then(() =>{
+                console.log('Carrinho limpo!')
+            })
+            setCart([]);
+        } catch (err) {
+            console.error('Falha ao limpar carrinho:', err);
+        }
+    }
 
   
     useEffect(() => {
@@ -137,7 +161,7 @@ function Cart() {
             <div id={styles.total}>
                 <h1>Total:</h1>
                 <h2>R$ {cart.reduce((total, cartItem) => total + cartItem.price, 0).toFixed(2)}</h2>
-                <button>Finalizar Compra</button>
+                <button onClick={orderProducts}>Finalizar Compra</button>
             </div>
         </div>
     )

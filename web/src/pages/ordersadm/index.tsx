@@ -24,6 +24,7 @@ export interface Product {
 
 function Orders() {
     const userId = useAuth()?.id;
+      const isAdmin = useAuth().type == 'admin'
     const [orders, setOrders] = useState<Order[]>([]);
     const [loading, setLoading] = useState(false);
     const [reload, setReload] = useState(false);
@@ -37,7 +38,7 @@ function Orders() {
 
         setLoading(true);
         try {
-            const res = await api.get('/orders', { params: { userId } });
+            const res = await api.get('/orders');
             const unmappedOrders = res.data;
             const newOrders: Order[] = [];
 
@@ -114,14 +115,14 @@ function Orders() {
         }
     }
 
-    
-    return (
+    return ( 
         <div id={styles.orders}>
             <div id={styles.banner}>
                 <Header />
-                <h1>Meus Pedidos</h1>
+                <h1>Controle de Pedidos</h1>
             </div>
-            <div id={styles.orderlist}>
+            { isAdmin ?
+            (<div id={styles.orderlist}>
                 {loading ? (
                     <p>Carregando Pedidos...</p>
                 ) : (
@@ -138,11 +139,11 @@ function Orders() {
                         />
                     ))
                 )}
-            </div>
+            </div>) : (<div>
+                Me desculpe, mas você não tem permissão para ver esta página.
+            </div>)}
         </div>
-
     );
-    
 }
 
 export default Orders;

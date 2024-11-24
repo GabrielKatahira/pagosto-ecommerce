@@ -33,6 +33,8 @@ interface Bought {
 
 function Breads() {
     const [breads, setBreads] = useState<Bread[]>([]);
+    const [filteredBreads, setFilteredBreads] = useState<Bread[]>([]);
+    const [filter, setFilter] = useState('');
     const isAdmin = useAuth().type == 'admin';
     const [isNew, setIsNew] = useState(false);
     const [newBread, setNewBread] = useState<Bread>({
@@ -60,8 +62,6 @@ function Breads() {
     useEffect(() => {
         if (userId > 0) {
             fetchUser();
-        } else {
-            alert('Sessão expirada ou inválida! Por favor faça login.')
         }
     }, [userId]);
 
@@ -113,6 +113,7 @@ function Breads() {
                 )
             })
             setBreads(newBreads)
+            handleFilter()
         })
         } catch (err) {
             alert('Falha em buscar pães!')
@@ -174,6 +175,9 @@ function Breads() {
             alert('Por favor, preencha todos os campos de tamanhos e preços!')
         }
     }
+    function handleFilter()  {
+        setFilteredBreads(breads.filter(bread => bread.name.toLowerCase().includes(filter.toLowerCase())))
+    }
 
     return(
         <div id={styles.breads}>
@@ -181,9 +185,13 @@ function Breads() {
                 <Header />
                 <h1>Pães</h1>
             </div>
+            <div id={styles.filter}>
+                <label>Filtrar por:</label>
+                <input type="text" value={filter} onChange={(e) => {setFilter(e.target.value)}}/>
+            </div>
             <div id={styles.products}>
             {
-                breads.map((bread: Bread) => (
+                filteredBreads.map((bread: Bread) => (
                     <Product id={bread.id} name={bread.name} prices={bread.prices} image={bread.image} description={bread.description} sizes={bread.sizes} category='Breads' isAdmin={isAdmin} addToCart={addToCart}/>
                 ))
             }
