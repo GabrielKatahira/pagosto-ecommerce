@@ -11,8 +11,10 @@
 
 Rodar front:<br>
 cd web<br>
+npm install<br>
 npm run dev<br>
 <br>
 Rodar back:<br>
 cd server<br>
+npm install<br>
 npm run start<br>
