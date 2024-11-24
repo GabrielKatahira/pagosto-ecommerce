@@ -201,4 +201,4 @@ app.listen(port, () => {
   console.log(`Server rodando na porta ${port}`);
 });
 
-module.exports.handler = serverless(app);
+module.exports = app;
