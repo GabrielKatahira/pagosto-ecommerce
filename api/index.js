@@ -3,6 +3,7 @@ const db = require('./knex');
 const app = express();
 const port = 5000;
 const cors = require('cors');
+const serverless = require('serverless-http')
 
 const path = require('path');
 const fs = require('fs');
@@ -199,3 +200,5 @@ app.put('/api/orders', async (req, res) => {
 app.listen(port, () => {
   console.log(`Server rodando na porta ${port}`);
 });
+
+module.exports.handler = serverless(app);
